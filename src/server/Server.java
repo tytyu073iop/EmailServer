@@ -1,6 +1,7 @@
 package server;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
 import java.util.TreeMap;
@@ -22,9 +23,9 @@ public class Server {
 		}
 	}
 	
-	public SocketAddress LoginUser(String i, Socket oos) throws LoginError {
+	public SocketAddress LoginUser(String i, Socket soc, ObjectInputStream ois, ObjectOutputStream oos) throws LoginError {
 		if (clients.contains(i)) {
-			onlineUsers.put(i, new User(i, oos, this));
+			onlineUsers.put(i, new User(i, soc, this, ois, oos));
 			return null;
 		} else {
 			throw new LoginError("Don't have");

@@ -25,3 +25,5 @@ replay_pid*
 
 # my
 .DS_Store
+/program/
+/server/

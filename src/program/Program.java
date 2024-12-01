@@ -74,7 +74,7 @@ public class Program {
 							
 							ObjectOutputStream oos = new ObjectOutputStream(soc.getOutputStream());
 							try {
-								oos.writeObject(s.LoginUser((String) ois.readObject(), soc));
+								s.LoginUser((String) ois.readObject(), soc, ois, oos);
 								oos.write(1);
 							} catch (LoginError e) {
 								oos.write(0);

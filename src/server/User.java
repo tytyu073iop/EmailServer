@@ -1,8 +1,10 @@
 package server;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.*;
 import server.*;
 
@@ -10,11 +12,15 @@ public class User {
 	public String user;
 	Socket s;
 	Server server;
+	ObjectInputStream ois;
+	ObjectOutputStream oos;
 	
-	public User(String i, Socket s, Server ser) {
+	public User(String i, Socket s, Server ser, ObjectInputStream ois, ObjectOutputStream oos) {
 		user = i;
 		this.s = s;
 		server = ser;
+		this.ois = ois;
+		this.oos = oos;
 		userMessageReciver.start();
 	}
 	
@@ -22,15 +28,17 @@ public class User {
 		public void run() {
 			while (true) {
 				try {
-					InputStream is = s.getInputStream();
-					ObjectInputStream ois = new ObjectInputStream(is);
 					Message m = (Message) ois.readObject();
 					server.SendMessage(m);
+				} catch (EOFException e) {
+					e.printStackTrace();
+					break;
 				} catch (IOException e) {
-					System.err.print("Error reciving message from " + user + " eroor:" + e);
+					e.printStackTrace();
 				} catch (ClassNotFoundException e) {
-					System.err.print("Дебил. Не то отправил: " + e);
-				}
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
 			}
 		}
 	};
