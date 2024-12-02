@@ -7,14 +7,14 @@ public class Message implements Serializable {
     
     public String sender;
     public String receiver;
-    public Object files;
+    public EmailFile file;
     public String message;
 
     // Constructor
-    public Message(String sender, String receiver, Object files, String message) {
+    public Message(String sender, String receiver, EmailFile file, String message) {
         this.sender = sender;
         this.receiver = receiver;
-        this.files = files;
+        this.file = file;
         this.message = message;
     }
 }
