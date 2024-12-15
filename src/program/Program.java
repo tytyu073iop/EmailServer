@@ -70,14 +70,17 @@ public class Program {
 						
 						try {
 							Socket soc = ssLogin.accept();
-							ObjectInputStream ois = new ObjectInputStream(soc.getInputStream());
 							
 							ObjectOutputStream oos = new ObjectOutputStream(soc.getOutputStream());
+							ObjectInputStream ois = new ObjectInputStream(soc.getInputStream());	
+							
 							try {
 								s.LoginUser((String) ois.readObject(), soc, ois, oos);
 								oos.write(1);
+								oos.flush();
 							} catch (LoginError e) {
 								oos.write(0);
+								oos.flush();
 								e.printStackTrace();
 							}
 						} catch (IOException e) {
@@ -87,6 +90,7 @@ public class Program {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						
 						
 					}
 				}

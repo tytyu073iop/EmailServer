@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
 import server.*;
+import java_server.*;
 
 public class User {
 	public String user;

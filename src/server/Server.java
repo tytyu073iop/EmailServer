@@ -9,6 +9,7 @@ import java.util.Vector;
 
 import errors.LoginError;
 import errors.RegisterError;
+import java_server.Message;
 
 public class Server {
 	Vector<String> clients = new Vector<String>();
@@ -33,10 +34,9 @@ public class Server {
 	}
 	
 	boolean SendMessage(Message message) {
-		Socket s = onlineUsers.get(message.receiver).s;
-		synchronized(s) {
+		ObjectOutputStream oos = onlineUsers.get(message.receiver).oos;
+		synchronized(oos) {
 			try {
-				ObjectOutputStream oos = (ObjectOutputStream) s.getOutputStream();
 				oos.writeObject(message);
 				return true;
 			} catch (IOException e) {
